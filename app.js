@@ -1,12 +1,10 @@
-var express  = require('express');
-var app = express();
-
-/*
-  Passport Facebook Configuration
-*/
-
-var passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy;
+var express = require('express'),
+    app = express(),
+    //Passport Facebook Configuration
+    passport = require('passport'),
+    FacebookStrategy = require('passport-facebook').Strategy,
+    //Use Flames
+    Flames = require('flames');
 
 passport.use(new FacebookStrategy({
     clientID: '937190093011617',
@@ -32,15 +30,14 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/',
                                       failureRedirect: '/login' }));
-
-
-
-app.get('/flames/:fname?/:sname?', function(req, res) {
-  var fname = req.query.fname;
-  var sname = req.query.sname;
+/**
+ * By Path params
+ */
+app.get('/flames/:fname/:sname', function(req, res) {
+  var fname = req.params.fname;
+  var sname = req.params.sname;
   console.log('First Name: ' + fname);
   console.log('First Name: ' + sname);
-  var Flames = require('flames');
 
   console.log(Flames.getRelation(fname, sname));
   res.send({
@@ -48,11 +45,28 @@ app.get('/flames/:fname?/:sname?', function(req, res) {
   	relation : Flames.getRelation(fname, sname)
   });
 });
+/**
+ * By query params
+ */
+app.get('/flames', function(req, res) {
+    var fname = req.query.fname;
+    var sname = req.query.sname;
+
+    console.log('First Name: ' + fname);
+    console.log('First Name: ' + sname);
+
+    console.log(Flames.getRelation(fname, sname));
+    res.send({
+        success : true,
+        relation : Flames.getRelation(fname, sname)
+    });
+});
 
 
 
 app.get('/users', function(req, res) {
-    res.send({ success: true, status: 'User logged in using facebook' });
+    res.send({ success: true, status: 'User ' +  req.user +' logged' +
+    ' in using facebook' });
     return;
 });
 
