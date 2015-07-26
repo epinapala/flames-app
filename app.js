@@ -2,17 +2,18 @@ var express  = require('express');
 var app = express();
 
 
-app.get('/',function(req,res){
-	res.send('<h1>Flames Application </h1>');
 
-});
+app.get('/flames/:fname?/:sname?', function(req, res) {
+  var fname = req.query.fname;
+  var sname = req.query.sname;
+  console.log('First Name: ' + fname);
+  console.log('First Name: ' + sname);
+  var Flames = require('flames');
 
-app.get('/users/:name', function(req, res) {
-  var name = req.params.name;
-
+  console.log(Flames.getRelation(fname, sname));
   res.send({
   	success : true,
-  	user : name
+  	relation : Flames.getRelation(fname, sname)
   });
 });
 
@@ -31,6 +32,6 @@ app.post('/users', function(req, res) {
 
 });
 
-app.listen(3000, function(){
-	console.log("Listening on 3000");
+app.listen(3002, function(){
+	console.log("Listening on 3002");
 });
