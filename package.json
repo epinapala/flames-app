@@ -9,6 +9,7 @@
   "author": "v4",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.13.1"
+    "express": "^4.13.1",
+    "flames": "^1.0.3"
   }
 }
