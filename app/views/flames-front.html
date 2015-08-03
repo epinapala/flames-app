@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Flames</h2>
+  <p>Please provide the names to calculate Flames:</p>
+  <form role="form" data-toggle="validator">
+    <div class="form-group" >
+      <label for="usr">First Name:</label>
+      <input type="text" class="form-control" id="usr1">
+    </div>
+    <div class="form-group">
+      <label for="usr2">Second Name:</label>
+      <input type="text" class="form-control" id="usr2">
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="button" id="btnSub" class="btn btn-default" value="Submit"/>
+      </div>
+    </div>
+  </form>
+</div>
+<div id="div1"></div>
+<script>
+$(document).ready(function(){
+    $("#div1").hide();
+    $("#btnSub").click(function(){
+	console.log("clicked");
+        $.get("http://localhost/flames.php",function(data,status){
+	$("#div1").show();
+	console.log("data" + data);
+	$.each(data,function(index,element){
+	alert("Relationship for " + $("#usr1").val()+  " with " + $("#usr2").val() + " is "+ element);	
+<!--	$("#div1").html(element); -->
+      
+});
+        });
+    });
+});
+</script>
+
+</body>
+</html>
