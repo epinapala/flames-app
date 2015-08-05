@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Flames</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="jquery.h5validate.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<div class="container">
+  <h2>Flames</h2>
+  <p>Please provide the names to calculate Flames:</p>
+  <form id=flameForm role="form" data-toggle="validator">
+    <div class="form-group" >
+      <label for="usr">First Name:</label>
+      <input type="text" class="form-control" id="usr1" required style="width:50%" >
+    </div>
+    <div class="form-group">
+      <label for="usr2">Second Name:</label>
+      <input type="text" class="form-control" id="usr2" required style="width:50%">
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="button" id="btnSub" class="btn btn-default" value="Get Flames"/> &nbsp;&nbsp;&nbsp;
+        <input type="button" id="clear" class="btn btn-default" value="Clear"/>
+    </div>
+  </form>
+</div>
+<br/> <br/> <br/>
+<div id="div1" style="font-size: 16px;color: blue"></div>
+<script>
+$(document).ready(function(){
+    $("#div1").hide();
+    $("#btnSub").click(function(){
+	console.log("clicked");
+        $.get("http://localhost/flames.php",function(data,status){
+	$("#div1").hide(); 
+	console.log("data" + data);
+	$.each(data,function(index,element){
+        var usr1=$("#usr1").val();
+        var usr2=$("#usr2").val();
+        var result="Relationship for "+usr1+ " with "+usr2 +" is " +element+" .";
+	$("#div1").html(result).fadeIn(1000); 
+	});
+        });
+    });
+  $("#clear").click(function(){ 
+	document.getElementById("flameForm").reset();
+});
+
+});
+
+</script>
+</body>
+</html>
